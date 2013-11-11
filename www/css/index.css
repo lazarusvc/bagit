@@ -7,28 +7,34 @@ margin: 0;
 padding: 0 
 }
 
-#header {
-z-index:1;	
+
+#nav {
+background-color: #313131;	
 width: 100%;
+height:15%;
 float: left;
 margin: 0 0 1em 0;
 padding: 0;
-background-color: #313131;
 border-bottom: 1px solid #313131; 
 position: fixed; 
 }
 
-#header a:hover {
-}
 
 img.title {
-border: 0; 
-max-width: 100%; 
+z-index:1;
+border:block;
+float:right;
+top:0.1%;
+right:50%;
+position:fixed;
 }
 
-#map-canvas { 
-height: 100%;
-margin: 0;
+#map { 
+height:100%;
+}
+
+#food a:hover {
+
 }
 
 
