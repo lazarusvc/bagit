@@ -1,4 +1,4 @@
 bagit
 =====
 
-bag and get your phone 
+bagit is a delivery courier service
