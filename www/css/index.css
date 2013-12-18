@@ -1,36 +1,7 @@
-html { 
-height: 100% 
-}
-body { 
-height: 100%; 
-margin: 0; 
-padding: 0;
-}
-
-
-
-#nav {
-z-index:1;
-background-color:#313131;	
-width:100%;
-height:13%;
-position: fixed; 
-}
-
-
-img.title {
-z-index:1;
-border:block;
-float:right;
-top:0.10%;
-right:50%;
-position:fixed;
-}
-
-#map {
-border:block;  
-width:100%;
-height:100%;
+html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
 }
 
 
