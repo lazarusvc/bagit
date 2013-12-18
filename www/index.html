@@ -1,41 +1,55 @@
 <html>
 <head>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+<meta charset="utf-8">
+
+<!-- jQuery Libraries-->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script type="text/javascript" src="PATH_TO_PLUGIN/jquery.ui.map.js"></script>
+
+
+<!-- END-->
+
+<!-- CSS3 -->
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+<!-- END -->
 
 <!-- Libraries for the Map - Leaflet & Mapbpx (A map layer customization library) -->
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6/leaflet.css" />
-<link href='//api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.standalone.css' rel='stylesheet' />
-<link rel="stylesheet" type="text/css" href="css/index.css" />  
+<!-- END -->
 
-<script src="http://cdn.leafletjs.com/leaflet-0.6/leaflet.js"></script>
-<script src='//api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.standalone.js'></script>
-
-<script type="text/javascript" src="js/cordova.js"></script>
-
-<!-- To include - jQuery -->
-<!-- jQuery does not function too well with other Libraries -->
-<!-- ACTION: More research to be done on proper integration -->
 </head>
 
   
 <body>
-<div data-role="page"><!-- jQuery Page-->
+<!-- jQuery Page Begin-->
+<div data-role="page">
     
-<div data-role="header">
-<!-- Navigation bar -->
-<div id="nav"></div>
-<img class="title" src="./img/title.png">
-
-</div><!-- jQuery Header end -->
-
+        <!-- settings panel -->
+        <div id="settingspanel" data-role="panel" data-position="left" data-display="push">
+            <h1>This is my panel content.</h1>
+            
+        </div>
+        
+    <div data-role="header" >
+        <!-- Navigation bar -->
+        <a href="#settingspanel" data-icon="gear" data-iconpos="notext">Settings</a>
+         <h1>Bagit</h1>
+    </div>
 	
-<div data-role="content">
-<!-- Container tag which handles map integration -->  
-<div id='map'></div>
+    <div data-role="content">
+        <!-- Map -->
+        <!--<div id='map'></div>-->
+         <div id="map-canvas"></div>
 
-</div><!-- jQuery Content end -->
-
-</div><!-- jQuery Page end -->
+    </div>
+</div>
+<!-- jQuery Page end -->
 
 <!-- This is the main Javascript file | placed here in the DOM as dependent on how the map works -->
 <script type="text/javascript" src="js/index.js"></script>
