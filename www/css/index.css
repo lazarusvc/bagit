@@ -1,8 +1,39 @@
-html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px;
+
+.ui-content {
+position: absolute;
+top: 50px;
+bottom: 0;
+right: 0;
+left: 0;
+padding: 0;
 }
+
+.search-bar {
+background: #e88e3d !important;
+padding: 2px;
+}
+
+#logo {
+text-align: center;
+margin-left:0 auto;
+margin-right:0 auto;
+}
+
+#map {
+height: 100%;
+}
+
+#mypanel {
+border:block;
+position:fixed;
+}
+
+#hello {
+border:block;
+left:50%;
+color:grey;
+}
+
 
 
 
