@@ -1,50 +1,20 @@
-//####### Initialize the Map  #######//
-var map = L.map('map',
-                {
-                  center: [15.304221,-61.384134], //<== Exact Coordinates of the town of Roseau 
-                  animate: true, //<== Creates an animation effect when navigating the map
-                  zoom:20 //<== Creates an initial zoom level on map load 
-                });
-
-//####### Load and display tile layers on the map #######//
-L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png').addTo(map);
-
-//####### Automatically locates and sets a maximum view #######//
-map.locate({setView: true});
-
-//##### Adds Marker to map at specified coordinates  ####//
-L.marker([15.304221,-61.384134]).addTo(map)
-.bindPopup("<b>Roseau</b>").openPopup(); //<== Creates a Popup on the marker 
-
-
-    // Wait for device API libraries to load
-    //
-    document.addEventListener("deviceready", onDeviceReady, false);
-
-    // device APIs are available
-    //
-    function onDeviceReady() {
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    }
-
-    // onSuccess Geolocation
-    //
-    function onSuccess(position) {
-        var element = document.getElementById('geolocation');
-        element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
-                            'Longitude: '          + position.coords.longitude             + '<br />' +
-                            'Altitude: '           + position.coords.altitude              + '<br />' +
-                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
-                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
-                            'Heading: '            + position.coords.heading               + '<br />' +
-                            'Speed: '              + position.coords.speed                 + '<br />' +
-                            'Timestamp: '          + position.timestamp                    + '<br />';
-    }
-
-    // onError Callback receives a PositionError object
-    //
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
-    }
-	
+//Initialize Map
+$(document).on('pageinit', '#index', function(){
+    //Loads page w/o tile issue
+    setTimeout(function(){
+        //load coordinates of roseau city and enable tapping
+        var map = L.map('map',{center: [15.304221,-61.384134],zoom:16,tap:true});
+        //Load and display tile layers on the map
+        var mapLayer =  L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',{}).addTo(map);
+        //Marker w/ Popup for Roseau Central
+        L.marker([15.304221,-61.384134]).addTo(map).bindPopup("<a href='#Roseau' style='text-decoration:none;'><p>Roseau Central</p></a>");
+        //Marker w/ Popop for Princess Margaret Hospital
+        L.marker([15.305708,-61.385105]).addTo(map).bindPopup("<a href='#PMH' style='text-decoration:none;'><p>Princess Margaret Hospital</p></a>");
+        //Marker w/ Popop for Roseau Bus Stop
+        L.marker([15.300650,-61.388465]).addTo(map).bindPopup("<a href='#RBS' style='text-decoration:none;'><p>Roseau Bus Stop</p></a>");
+        //Marker w/ Popop for Roseau Valley Bus Stop
+        L.marker([15.299134,-61.38522]).addTo(map).bindPopup("<a href='#RVBS' style='text-decoration:none;'><p>Roseau Valley Bus Stop</p></a>");
+        //Marker w/ Popop for My home(TEST)
+        L.marker([15.3332779,-61.3852137]).addTo(map).bindPopup("<a href='#test' style='text-decoration:none;'><p>Hello World!</p></a>");
+    },1);// end of Load page issue
+});// end of Initialize the Map
