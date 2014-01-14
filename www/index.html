@@ -1,45 +1,82 @@
+<!DOCTYPE html>
 <html>
-<head>
-<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-
-<!-- Libraries for the Map - Leaflet & Mapbpx (A map layer customization library) -->
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6/leaflet.css" />
-<link href='//api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.standalone.css' rel='stylesheet' />
-<link rel="stylesheet" type="text/css" href="css/index.css" />  
-
-<script src="http://cdn.leafletjs.com/leaflet-0.6/leaflet.js"></script>
-<script src='//api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.standalone.js'></script>
-
-<script type="text/javascript" src="js/cordova.js"></script>
-
-<!-- To include - jQuery -->
-<!-- jQuery does not function too well with other Libraries -->
-<!-- ACTION: More research to be done on proper integration -->
-</head>
-
-  
-<body>
-<div data-role="page"><!-- jQuery Page-->
+    <head>
+        <title>bagit</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        
+        <!-- css includes -->
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+        <link rel="stylesheet" href="css/index.css"/>
+        
+        <!-- javasript includes -->
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
+        <script src="js/index.js"></script>
+        
+    </head>
     
-<div data-role="header">
-<!-- Navigation bar -->
-<div id="nav"></div>
-<img class="title" src="./img/title.png">
-
-</div><!-- jQuery Header end -->
-
-	
-<div data-role="content">
-<!-- Container tag which handles map integration -->  
-<div id='map'></div>
-
-</div><!-- jQuery Content end -->
-
-</div><!-- jQuery Page end -->
-
-<!-- This is the main Javascript file | placed here in the DOM as dependent on how the map works -->
-<script type="text/javascript" src="js/index.js"></script>
-
-</body>
+    <body>
+        
+        <!-- Index page -->
+        <div data-role="page" id="index">
+            
+            <!--- Submenu Panel --->
+            <div data-role="panel" id="mypanel" data-position="left" data-display="push" data-theme="b">
+                
+                <!-- panel content goes here -->
+                <a href="#test" data-role="button" data-corners="false" data-theme="b">
+                    <div id="settings">
+                        <p>Settings</p>
+                    </div>
+                </a>
+                <hr width="100%" color="grey">
+                <a href="#about" data-role="button" data-corners="false" data-theme="b">
+                    <p>About</p></a>
+                <hr width="100%" color="grey">
+                <p>©RICON 2014</p>
+            </div>
+            <!-- /panel -->
+            
+            <!-- index header -->
+            <div data-theme="b" data-role="header">
+                <div id="logo"><img src="img/logo.png"/></div>
+                <a href="#mypanel" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext "><img src="img/stack.png"></a>
+            </div>
+            <!-- /header -->
+            
+            <!-- index content -->
+            <div data-role="content">
+                <div class="search-bar">
+                    <form>
+                        <input type="text" name="livesearch" id="livesearch" value="" placeholder="e.g. fries, shwama">
+                    </form>
+                </div>
+                <div id="map"></div>
+            </div>
+            <!-- /content -->
+        </div>
+        <!-- /index -->
+        
+        <!------------------------------------------------->
+        
+        <!-- test page -->    
+        <div data-role="page" id="test">
+            
+            <!-- test header -->  
+            <div data-theme="b" data-role="header">
+                <h1>Bagit</h1>
+                <a href="#index">
+                    <img src="img/home.png"></a>
+            </div><!-- /header -->
+            
+            <div data-role="content">
+                <div id="hello">  
+                    <h1>Hello World!</h1></div>
+            </div><!-- /content -->
+            
+        </div><!-- /test -->
+    </body>
 </html>
 
