@@ -32,9 +32,12 @@
                     </div>
                 </a>
                 <hr width="100%" color="grey">
+                
                 <a href="#about" data-role="button" data-corners="false" data-theme="b">
-                    <p>About</p></a>
+                    <p>About</p>
+                </a>
                 <hr width="100%" color="grey">
+                
                 <p>©RICON 2014</p>
             </div>
             <!-- /panel -->
@@ -49,8 +52,9 @@
             <!-- index content -->
             <div data-role="content">
                 <div class="search-bar">
-                    <form>
-                        <input type="text" name="livesearch" id="livesearch" value="" placeholder="e.g. fries, shwama">
+                    <form action="include/map_search.php" method="Post">
+                        <input type="text" name="keyword" id="keyword" placeholder="e.g. fries, shwama">
+                            <input type="submit" name="enter" id="submit_btn"  value="search">
                     </form>
                 </div>
                 <div id="map"></div>
