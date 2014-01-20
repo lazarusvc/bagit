@@ -13,10 +13,13 @@ zoom:16,
 tap:true
 });
   
+
+
+  
 //Custom Bagit marker icons (Define)   
   var LeafIcon = L.Icon.extend({
     options: {
-        iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/Marker-A_zpsf0ea448b.png',
+        iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/g3017_zps7c57828a.png',
         shadowUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/Marker-Shadow_zps93ab5b53.png',
         iconSize:     [38, 95],
         shadowSize:   [50, 64],
@@ -27,13 +30,16 @@ tap:true
 });
   
 //Custom Bagit marker icons (Class)
-var aIcon = new LeafIcon({iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/Marker-A_zpsf0ea448b.png'}),
-    bIcon = new LeafIcon({iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/Marker-B_zpsd83fdad7.png'});
+var aIcon = new LeafIcon({iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/g3017_zps7c57828a.png'}),
+    bIcon = new LeafIcon({iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/g3023_zps561076ae.png'});
 
+  
     
 //Load and display tile layers on the map
-var mapLayer =  L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',{
+var mapLayer =  L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/118962/256/{z}/{x}/{y}.png',{
     }).addTo(map);
+  //Brown & Light blue 118962
+  //Bagit style colors 118688
 
 
 //Marker w/ Popup for Roseau Central 
@@ -42,7 +48,7 @@ L.marker([15.304221,-61.384134], {icon: bIcon}).addTo(map).bindPopup(
 
 //Marker w/ Popop for Princess Margaret Hospital  
 L.marker([15.305708,-61.385105], {icon: aIcon}).addTo(map).bindPopup(
-  "<a href='#PMH' style='text-decoration:none;'><p>Princess Margaret Hospital</p></a><hr width='100%' color='grey'><p>Charles Avenue, Goodwill</p>");
+  "<a href='#PMH' style='text-decoration:none;'><p>Princess Margaret Hospital</p></a><hr width='100%' color='grey'><p><b>Tel: 266-2000</b></p><p>Charles Avenue, Goodwill</p><p>Open - Closed: 24/7</p>");
 
   
 //Marker w/ Popop for Roseau Bus Stop   
@@ -60,15 +66,34 @@ L.marker([15.3332779,-61.3852137], {icon: bIcon}).addTo(map).bindPopup(
   
 //Marker w/ Popop for Optical Services Ltd.   
 L.marker([15.3009985,-61.3867475], {icon: aIcon}).addTo(map).bindPopup(
-  "<a href='#Optical' style='text-decoration:none;'><p>Optical Services Ltd.</p></a><hr width='100%' color='grey'><p><b>Tel: 449-9099</b></p><p>Hillsborough Street</p><p>Open-8:00am</p>Closed-6:00pm</p>");
+  "<a href='#Optical' style='text-decoration:none;' style='z-index:1;'><p>Optical Services Ltd.</p></a><hr width='100%' color='grey'><p><b>Tel: 449-9099</b></p><p>Hillsborough Street</p><p>Open-8:00am</p>Closed-6:00pm</p>");
   
+//Marker w/ Popop for Island Ice-cream
+L.marker([15.2988323,-61.3879739], {icon: aIcon}).addTo(map).bindPopup(
+"<a href='#Island-ice-cream' style='text-decoration:none;'><p>Island Ice-cream</p></a>");
+  
+//Marker w/ Popop for Patty Shack
+L.marker([15.2974194,-61.3871092], {icon: aIcon}).addTo(map).bindPopup(
+"<a href='#Patty-shack' style='text-decoration:none;'><p>Patty Shack</p></a>");
+
+  
+//Marker w/ Popop for Patty Shack
+L.marker([15.2974194,-61.3871092], {icon: aIcon}).addTo(map).bindPopup(
+"<a href='#Patty-shack' style='text-decoration:none;'><p>Patty Shack</p></a>");
+  
+//Marker w/ Popop for The Banana tree
+L.marker([15.2980223,-61.3883549], {icon: aIcon}).addTo(map).bindPopup(
+"<a href='#The-banana-tree' style='text-decoration:none;'><p>The Banana tree</p></a>");
+  
+  
+  
+
   
   
   },1);// end of Load page issue 
 });// end of Initialize Map
 
-	
-	
-		
+
+
 
 
