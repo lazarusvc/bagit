@@ -6,13 +6,13 @@
         
         <!-- css includes -->
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+        <link rel="stylesheet" href="leaflet-0.7.1/leaflet.css" />
         <link rel="stylesheet" href="css/index.css"/>
         
         <!-- javasript includes -->
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
-        <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
+        <script src="leaflet-0.7.1/leaflet.js"></script>
         <script src="js/index.js"></script>
         
     </head>
@@ -51,27 +51,20 @@
               <!-- Proper positioning of Map was being affected -->
               
               <!-- Search bar -->
-                <div class="search-bar">
-                    <form>
-                        <input type="text" name="livesearch" id="livesearch" value="" placeholder="e.g. fries, shwama, paracetamol">
+                              <div class="search-bar">
+                    <form action="include/map_search.php" method="Post">
+                        <input type="text" name="keyword" id="keyword" placeholder="e.g. fries, shwama">
+                            <input type="submit" name="enter" id="submit_btn"  value="search">
                     </form>
-                </div>
-              <!-- /Search bar -->
+                </div> 
+
+              
             </div>
             <!-- /header -->
             
             <!-- index content -->
             <div data-role="content">
-<<<<<<< HEAD
-=======
-                <div class="search-bar">
-                    <form action="include/map_search.php" method="Post">
-                        <input type="text" name="keyword" id="keyword" placeholder="e.g. fries, shwama">
-                            <input type="submit" name="enter" id="submit_btn"  value="search">
-                    </form>
-                </div>
->>>>>>> 5e3f678b714e641e31f4b3a754ea065c58191b8c
-                <div id="map"></div>
+ <div id="map"></div>
             </div>
             <!-- /content -->
         </div>
