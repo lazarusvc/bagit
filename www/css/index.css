@@ -1,7 +1,7 @@
 
 .ui-content {
 position: absolute;
-margin-top:5%;
+margin-top:8%;
 top: 50px;
 bottom: 0;
 right: 0;
@@ -13,7 +13,7 @@ padding: 0;
 border:block;
 z-index:1;
 width:100%;
-background: #ff6600 !important;
+background: #ff6600;
 padding: 2px;
 position:absolute;
  
@@ -32,8 +32,9 @@ margin-right:0 auto;
 }
 
 #map {
-height:100%;
 border:block;
+height:100%;
+
 }
 
 #mypanel {

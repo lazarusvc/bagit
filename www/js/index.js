@@ -19,8 +19,8 @@ tap:true
 //Custom Bagit marker icons (Define)   
   var LeafIcon = L.Icon.extend({
     options: {
-        iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/g3017_zps7c57828a.png',
-        shadowUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/Marker-Shadow_zps93ab5b53.png',
+        iconUrl: 'leaflet-0.7.1/images/marker-A.png',
+        shadowUrl: 'leaflet-0.7.1/images/marker-shadow.png',
         iconSize:     [38, 95],
         shadowSize:   [50, 64],
         iconAnchor:   [22, 94],
@@ -30,15 +30,15 @@ tap:true
 });
   
 //Custom Bagit marker icons (Class)
-var aIcon = new LeafIcon({iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/g3017_zps7c57828a.png'}),
-    bIcon = new LeafIcon({iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/g3023_zps561076ae.png'});
+var aIcon = new LeafIcon({iconUrl: 'leaflet-0.7.1/images/marker-A.png'}),
+    bIcon = new LeafIcon({iconUrl: 'leaflet-0.7.1/images/marker-B.png'});
 
   
     
 //Load and display tile layers on the map
-var mapLayer =  L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/118962/256/{z}/{x}/{y}.png',{
+var mapLayer =  L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/118958/256/{z}/{x}/{y}.png',{
     }).addTo(map);
-  //Brown & Light blue 118962
+  //Brown & Light blue 118958
   //Bagit style colors 118688
 
 
