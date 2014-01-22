@@ -9,7 +9,7 @@
     
     <description>Courier Service Project</description>
     
-    <authorhref="http://www.riconglobal.com" email="riconoffice@gmail.com">
+    <author href="http://www.riconglobal.com" email="riconoffice@gmail.com">
         Ryan Royer | Austin Lazaurs
     </author>
 
@@ -89,14 +89,14 @@
     <gap:splash src="res/screen/android/screen-xhdpi-portrait.png" gap:platform="android" gap:density="xhdpi" />
     
 
-
+    <!--
         Define access to external domains.
 
         <access />            - a blank access tag denies access to all external resources.
         <access origin="*" /> - a wildcard access tag allows access to all external resource.
 
         Otherwise, you can specify specific domains:
-
+    -->
     <access origin="*"/> <!-- allow local pages -->
     <!--
      <access origin="http://phonegap.com" />                    - allow any secure requests to http://phonegap.com/
