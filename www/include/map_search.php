@@ -1,47 +1,48 @@
 <?php
 /*
- * Following code will list all the products
+ * Following code will list all the products and registered companies
+ * on database server.
  */
-
-$SESSION['keyword'] = $GET['POST']; //store post variable for search
     
-$response = array();    // array for JSON response
+require_once "db_connect.php";     // include dbconnect class
 
-require_once __DIR__ . 'include/db_connect.php';   // include db connect class
 
-$db = new DB_CONNECT(); // connect to database
+$response = array();               // initalize response array
+$db = new DB_CONNECT();            // connect to database
+
+// check for form POST variable
+if(isset($_POST['search'])) {
     
-$result = mysql_query("SELECT * FROM tblproduct WHERE item LIKE '".$SESSION['keyword']."%'") or die(mysql_error());   // get all products from products table
-
-
-if (mysql_num_rows($result) > 0) {   // looping through all results
-
-    $response["products"] = array();      // products node
-    
-    while ($row = mysql_fetch_array($result)) {
-    
-        $product = array();
-        $product["pid"] = $row["pid"];
-        $product["name"] = $row["name"];
-        $product["price"] = $row["price"];
-        $product["created_at"] = $row["created_at"];
-        $product["updated_at"] = $row["updated_at"];
+    // clean variable string to prevent mysql injection
+    $content = mysql_real_escape_string($_POST['search']);
+    // execute SQL statement enforcing foreign key constraint
+    $result = mysql_query(" SELECT tblproduct.idproduct, tblbusiness.company, tblbusiness.latitude , tblbusiness.longitude, tblbusiness.opening, tblbusiness.closing, tblbusiness.address ".
+                          " FROM tblproduct INNER JOIN tblbusiness".
+                          " WHERE tblbusiness.idbusiness = tblproduct.businessFK".
+                          " AND (tblproduct.item LIKE '".$content."%' OR tblproduct.item LIKE '%".$content."%')"
+    ) or die(mysql_error());
+    // check if results array is empty
+    if (mysql_num_rows($result) > 0) {
+        // create products array
+        $response["products"] = array();
+        // iterate through results array
+        while ($row = mysql_fetch_array($result)) {
         
+            $product = array();                         // initialize sub-array for holding json data
+            $product["company"] = $row["company"];      // assign company value
+            $product["latitude"] = $row["latitude"];    // assign latitude coordinates
+            $product["longitude"] = $row["longitude"];  // assign longitude coordinates
+            $product["address"] = $row["address"];      // assign business mailing address
+            $product["closing"] = $row["closing"];      // assign business closing time
+            $product["opening"] = $row["opening"];      // assign business opening time
+            
+            // push sub-array values into response array
+            array_push($response["products"], $product);
         
-        array_push($response["products"], $product);    // push single product into final response array
+        }
+        
     }
-
-    $response["success"] = 1;
-    
-    echo json_encode($response);    // echoing JSON response
-    
-} else {
-    
-    // no products found
-    $response["success"] = 0;
-    $response["message"] = "No products found";
-    
-    // echo no users JSON
+    // return json encode string
     echo json_encode($response);
 }
 ?>

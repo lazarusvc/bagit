@@ -14,11 +14,11 @@
         }
     
         function connect() {
-            require_once __DIR__ . 'include/db_config.php';    // import database connection variables
+            require_once "db_config.php";    // import database connection variables
             
             $con = mysql_connect(DB_SERVER, DB_USER, DB_PASSWORD) or die(mysql_error());    // Connecting to mysql database
-            $db = mysql_select_db(DB_DATABASE) or die(mysql_error()) or die(mysql_error()); // Selecing database
-            
+            $db = mysql_select_db(DB_DATABASE,$con) or die(mysql_error()) or die(mysql_error()); // Selecing database
+
             return $con;    // returing connection cursor
         }
         
