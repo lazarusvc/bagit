@@ -1,29 +1,25 @@
 
 .ui-content {
 position: absolute;
-margin-top:8%;
-top: 50px;
+margin-top:0;
+top: 7%;
 bottom: 0;
 right: 0;
 left: 0;
 padding: 0;
 }
 
-.search-bar {
-border:block;
+#livesearch {
+border: 0px;
+background-color: #ffffff;
+color: #000000;
+position: absolute;
 z-index:1;
-width:100%;
-background: #ff6600;
-padding: 2px;
-position:absolute;
- 
+top: 5%;
+left: 5%;
+opacity: 0.7;
+width: 75%;
 }
-
-.search-bar input
-{
-  background: #ffffff;
-}
-
 
 #logo {
 text-align: center;
@@ -32,10 +28,9 @@ margin-right:0 auto;
 }
 
 #map {
-border:block;
 height:100%;
-
 }
+
 
 #mypanel {
 border:block;
@@ -47,6 +42,5 @@ border:block;
 left:50%;
 color:grey;
 }
-
 
 

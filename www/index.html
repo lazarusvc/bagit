@@ -46,24 +46,20 @@
             <div data-theme="b" data-role="header">
                 <div id="logo"> <img src="http://i818.photobucket.com/albums/zz102/g-star118/title_zps7769e01b.png"></div>
                 <a href="#mypanel" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext "><img src="http://i818.photobucket.com/albums/zz102/g-star118/stack_zps150458ba.png"></a>
-              
-              <!-- Placed here in DOM because of Conflict with (.ui-content) css -->
-              <!-- Proper positioning of Map was being affected -->
-              
-              <!-- Search bar -->
-                              <div class="search-bar">
-                    <form action="include/map_search.php" method="Post">
-                        <input type="text" name="keyword" id="keyword" placeholder="e.g. fries, shwama">
-                            <input type="submit" name="enter" id="submit_btn"  value="search">
-                    </form>
-                </div> 
-
-              
-            </div>
-            <!-- /header -->
+              </div><!-- /header -->
+            
             
             <!-- index content -->
             <div data-role="content">
+			
+			       <!-- Search bar -->
+                              <div class="search-bar">
+                    <form action="include/map_search.php" method="Post">
+                        <input type="text" name="livesearch" id="livesearch" placeholder="e.g. fries, shwama">
+                    </form>
+					
+                </div> <!-- /Search bar -->
+				
  <div id="map"></div>
             </div>
             <!-- /content -->
