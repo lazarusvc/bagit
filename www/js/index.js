@@ -7,10 +7,54 @@ var markerarray = [];                                              // declare ma
 // initalize map function
 function main() {
 
+//load coordinates of current city and enable tapping
+    map = L.map('map',{
+      zoom:16,
+      tap:true});
+  
 
-    //load coordinates of current city and enable tapping
-    map = L.map('map',{center: [15.304221,-61.384134],zoom:16,tap:true});
-    //Load and display tile layers on the map
+
+//Custom Bagit marker icons (Define)   
+  var LeafIcon = L.Icon.extend({
+    options: {
+        iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/g3017_zps7c57828a.png',
+        shadowUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/Marker-Shadow_zps93ab5b53.png',
+        iconSize:     [38, 95],
+        shadowSize:   [50, 64],
+        iconAnchor:   [22, 94],
+        shadowAnchor: [4, 62],
+        popupAnchor:  [-3, -76]
+    }
+});
+  
+//Custom Bagit marker icons (Class)
+var aIcon = new LeafIcon({iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/g3017_zps7c57828a.png'}),
+    bIcon = new LeafIcon({iconUrl: 'http://i818.photobucket.com/albums/zz102/g-star118/g3023_zps561076ae.png'});
+
+  
+//Function for Geoloaction -- Locate user  
+function onLocationFound(e) {
+			var radius = e.accuracy / 2;
+            var bIcon = new LeafIcon();
+  
+			L.marker(e.latlng, {icon: bIcon}).addTo(map)
+				.bindPopup("Yay! You are within " + radius + " meters from this point").openPopup();
+
+			L.circle(e.latlng, radius).addTo(map);
+		}
+
+function onLocationError(e) {
+			alert(e.message);
+		}
+
+		map.on('locationfound', onLocationFound);
+		map.on('locationerror', onLocationError);
+
+		map.locate({setView: true, maxZoom: 16
+});
+  
+  
+//Load and display tile layers on the map
     var mapLayer =  L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',{}).addTo(map);
 }
 
@@ -74,7 +118,9 @@ $(function(){
       // add companies layer to map
       map.addLayer(companies);
       // add animation to markers in searchlayer
-      searchlayer.bounce({duration: 500, height: 100}, function(){console.log("done")});
+      searchlayer.bounce({duration: 500, height: 100}, function(){
+        console.log("done");
+      });
   
   });
 }
@@ -91,7 +137,7 @@ $(function() {
             var dataString = 'search='+ searchstr;                  // set input for search element
             
             // check if string Null
-            if(searchstr ==''){
+            if(searchstr ===''){
 
             $( "#error404" ).popup("open");                         // display error404 message for div id#
             $("#search").focus();                                   // reset cursor
@@ -106,7 +152,7 @@ $(function() {
                    cache: true,                                     // enable caching
                    success: function(html){
                        
-                       jsonarray = new Array();                     // initialize array to contain json object
+                       jsonarray = new Array([]);                     // initialize array to contain json object
                        var sqlsearch = JSON.parse(html);            // parse json string
                        
                        jsonarray = sqlsearch;                       // assign json object to array
