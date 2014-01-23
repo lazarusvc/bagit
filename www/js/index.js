@@ -97,22 +97,11 @@ $(function() {
 
             } else {
                 
-                // ajax page loading function
-                $.ajax({
-                   type: "POST",                                    // define method
-                   url: "./include/map_search.php",                 // define file path
-                   data: dataString,                                // define output format
-                   cache: true,                                     // enable caching
-                   success: function(html){
-                       
-                       jsonarray = new Array();                     // initialize array to contain json object
-                       var sqlsearch = JSON.parse(html);            // parse json string
-                       
-                       jsonarray = sqlsearch;                       // assign json object to array
-                       plotmarkers(jsonarray);                      // call plotmarker function to pass json object
-                       document.getElementById('search').value='';  // clear search variable
-                       $("#search").focus();                        // reset cursor
-                    }
+                // jsonp pass search variable to remote url and get data from mysql
+                $.getJSON('http://www.macasdominica.net/map_search.php?callback=?',dataString,function(data){
+                          
+                    plotmarkers(data);                              // call plotmarker function to pass json object
+                          
                 });
             }
         return false;                                               // return false
