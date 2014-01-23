@@ -20,7 +20,7 @@ if(isset($_POST['search'])) {
     $result = mysql_query(" SELECT tblproduct.idproduct, tblbusiness.company, tblbusiness.latitude , tblbusiness.longitude, tblbusiness.opening, tblbusiness.closing, tblbusiness.address ".
                           " FROM tblproduct INNER JOIN tblbusiness".
                           " WHERE tblbusiness.idbusiness = tblproduct.businessFK".
-                          " AND (tblproduct.item LIKE '".$content."%' OR tblproduct.item LIKE '%".$content."%')"
+                          " AND (tblproduct.item LIKE '".$content."%' OR tblproduct.item LIKE '%".$content."%') OR tblbusiness.company LIKE '".$content."%'"
     ) or die(mysql_error());
     // check if results array is empty
     if (mysql_num_rows($result) > 0) {
