@@ -7,7 +7,8 @@ var markerarray = [];                                              // declare ma
 // initalize map function
 function main() {
 
-//load coordinates of current city and enable tapping
+
+    //load coordinates of current city and enable tapping
     map = L.map('map',{
       zoom:16,
       tap:true});
@@ -54,7 +55,7 @@ function onLocationError(e) {
 });
   
   
-//Load and display tile layers on the map
+  //Load and display tile layers on the map
     var mapLayer =  L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',{}).addTo(map);
 }
 
@@ -83,6 +84,9 @@ function plotmarkers(sqljson) {
 function createmarker(jsonobj){
     
 $(function(){
+  
+  //Custom icon
+  var bIcon = new LeafIcon();
     // iterate through json array object "products"
     for (var key in jsonobj.products) {
         //set loop key
@@ -96,7 +100,7 @@ $(function(){
               var closing   = jsonobj.products[key].closing;       // assign business closing time
   
               // assign marker to searchlayer variable with popup data attached to marker
-              searchlayer = L.marker([latitude,longitude]).bindPopup("<b><a href='#' style='text-decoration:none;'><p>"+ company +"</p></a></b>" +
+          searchlayer = L.marker([latitude,longitude], {icon: bIcon}).bindPopup("<b><a href='#' style='text-decoration:none;'><p>"+ company +"</p></a></b>" +
                                                                      "<p>"+ address +"</p>" +
                                                                      "<p>Open: "+ opening +"AM</p>" +
                                                                      "<p>Close: "+ closing+"PM</p>"
