@@ -1,89 +1,96 @@
 <!DOCTYPE html>
 <html>
     <head>
+        
         <title>bagit</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         
         <!-- css includes -->
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
-        <link rel="stylesheet" href="leaflet-0.7.1/leaflet.css" />
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
         <link rel="stylesheet" href="css/index.css"/>
         
         <!-- javasript includes -->
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
-        <script src="leaflet-0.7.1/leaflet.js"></script>
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
         <script src="js/index.js"></script>
+         <script src="/cordova-1.9.0.js"></script>
+        <script src="js/bouncemarker.js"></script>
         
     </head>
     
-    <body>
+   <body onload="init();">
         
         <!-- Index page -->
         <div data-role="page" id="index">
             
             <!--- Submenu Panel --->
-            <div data-role="panel" id="mypanel" data-position="left" data-display="push" data-theme="b">
+            <div data-role="panel" id="mypanel" data-position="left" data-display="overlay" data-theme="b">
                 
                 <!-- panel content goes here -->
-                <a href="#test" data-role="button" data-corners="false" data-theme="b">
-                    <div id="settings">
-                        <p>Settings</p>
-                    </div>
-                </a>
+                    <br/>
+                        <h1 align="center">Settings</h1>
                 <hr width="100%" color="grey">
-                
+     <a href="#" id="dark-map" data-role="button" data-corners="false" data-theme="b"><p>Switch map theme</p></a>
+        <hr width="100%" color="grey">
+     <a href="#" id="" data-role="button" data-corners="false" data-theme="b"><p>Other</p></a>     
+         <hr width="100%" color="grey">
                 <a href="#about" data-role="button" data-corners="false" data-theme="b">
-                    <p>About</p>
-                </a>
+                    <p>About</p></a>
                 <hr width="100%" color="grey">
                 
-                <p>Â©RICON 2014</p>
+                <p>©RICON 2014</p>
             </div>
             <!-- /panel -->
             
             <!-- index header -->
-            <div data-theme="b" data-role="header">
-                <div id="logo"> <img src="http://i818.photobucket.com/albums/zz102/g-star118/title_zps7769e01b.png"></div>
-                <a href="#mypanel" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext "><img src="http://i818.photobucket.com/albums/zz102/g-star118/stack_zps150458ba.png"></a>
-              </div><!-- /header -->
-            
+            <div data-theme="b" data-role="header" data-position"fixed">
+                <div id="logo"><img src="img/logo.png"/></div>
+                <a href="#mypanel" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext "><img src="img/stack.png"></a>
+            </div>
+            <!-- /header -->
             
             <!-- index content -->
             <div data-role="content">
-			
-			       <!-- Search bar -->
-                              <div class="search-bar">
-                    <form action="include/map_search.php" method="Post">
-                        <input type="text" name="livesearch" id="livesearch" placeholder="e.g. fries, shwama">
-                    </form>
-					
-                </div> <!-- /Search bar -->
-				
- <div id="map"></div>
+                <div class="container">
+                    <div class="main">
+                        <div class="search-bar">
+                        <form  method="post" name="form">
+                            <input type="text" name="search" id="search" placeholder="e.g fries, shwama" />
+                        </form>
+                    </div>
+                </div>
+                    <div data-role="popup" id="error404">
+                        <p>Warning, seacrh is empty !<p>
+                    </div>
+                    <div data-role="popup" id="error405">
+                        <p>No matches found. Try again.<p>
+                    </div>
+                    <div class="geo-local" id="api-geolocation"><img src="img/geo-local.png"></div>
+            </div>
+                <div id="map"></div>
             </div>
             <!-- /content -->
         </div>
         <!-- /index -->
         
-        <!------------------------------------------------->
-        
-        <!-- test page -->    
-        <div data-role="page" id="test">
-            
-            <!-- test header -->  
-      <div data-theme="b" data-role="header">
-                <div id="logo"> <img src="http://i818.photobucket.com/albums/zz102/g-star118/title_zps7769e01b.png"></div>
-                <a href="#index" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext "><img src="http://i818.photobucket.com/albums/zz102/g-star118/stack_zps150458ba.png"></a>
-            </div>
+ <!--####################################-->
+
+    <!-- Settings page -->
+    <div data-role="page" id="settings">
+
+        <!-- Settings header -->
+       <div data-theme="b" data-role="header">
             </div><!-- /header -->
-            
-            <div data-role="content">
-                <div id="hello">  
-                    <h1>Hello World!</h1></div>
-            </div><!-- /content -->
-            
-        </div><!-- /test -->
+
+ <div data-role="content">
+   </div><!-- /content -->
+      
+  </div><!-- /Settings -->
+        
+<script type="text/javascript" charset="utf-8" src="apis/geolocation.js"></script>
+  
     </body>
 </html>
 
