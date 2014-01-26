@@ -35,7 +35,7 @@
   L.Marker.mergeOptions({
     bounceOnAdd: false,
     bounceOnAddOptions: {
-      duration: 1000,
+      duration: 500,
       height: -1
     },
     bounceOnAddCallback: function() {},

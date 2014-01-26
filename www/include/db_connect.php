@@ -18,7 +18,7 @@
             
             $con = mysql_connect(DB_SERVER, DB_USER, DB_PASSWORD) or die(mysql_error());    // Connecting to mysql database
             $db = mysql_select_db(DB_DATABASE,$con) or die(mysql_error()) or die(mysql_error()); // Selecing database
-
+            
             return $con;    // returing connection cursor
         }
         
