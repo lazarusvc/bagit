@@ -1,136 +1,99 @@
-
-// declare global variables
-var map;                                                           // declare map
-var companies = new L.layerGroup();                                // declare new companies layerGroup
-var searchlayer;                                                   // declare search layer
-var markerarray = [];                                              // declare marker array
-
+//Initialize the Map
 $(document).on('pageinit', '#index', function(){  
-	
 
-// initalize map function
-function main() {
-
-    //load coordinates of current city and enable tapping
-    map = L.map('map',{
-    center: [15.304221,-61.384134], 
-	zoom:14,
-	tap:true
-	});
+//Loads page w/o tile issue  
+setTimeout(function(){
+  var map = L.map('map',{
     
-	
-	
-    //Load and display tile layers on the map
-    var mapLayer =  L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',{}).addTo(map);
-}
+//Exact Coordinates for the town of Roseau 
+center: [15.304221,-61.384134], 
+//Creates an initial zoom level on map             
+zoom:16,
+//Enables double tapping 
+tap:true
+});
+  
 
-//Map theme switch to dark
-$('#dark-map').click(function() {
-    var mapLayer =  L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/118958/256/{z}/{x}/{y}.png',{
-}).addTo(map);    
-});  
 
-// call map initialize function
-window.onload = main;
-
-// plot map marker function  with argument for json data
-function plotmarkers(sqljson) {
-    
-    // get number of layers existing
-    if(companies.getLayers().length > 0){
-        // check if layers exist
-        companies.clearLayers();                                   // clear layers before creating new layer
-        createmarker(sqljson);                                     // call create map marker function and pass sqljson data
-        markerarray = [];                                          // reset array after creating layer markers
-        
-    } else {
-    
-        createmarker(sqljson);                                     // call create map marker function pass sqljson data
-        markerarray = [];                                          // reset array after creating layer markers
-    
+  
+//Custom Bagit marker icons (Define)   
+  var LeafIcon = L.Icon.extend({
+    options: {
+        iconUrl: 'leaflet-0.7.1/images/marker-A.png',
+        shadowUrl: 'leaflet-0.7.1/images/marker-shadow.png',
+        iconSize:     [38, 95],
+        shadowSize:   [50, 64],
+        iconAnchor:   [22, 94],
+        shadowAnchor: [4, 62],
+        popupAnchor:  [-3, -76]
     }
-}
+});
+  
+//Custom Bagit marker icons (Class)
+var aIcon = new LeafIcon({iconUrl: 'leaflet-0.7.1/images/marker-A.png'}),
+    bIcon = new LeafIcon({iconUrl: 'leaflet-0.7.1/images/marker-B.png'});
 
-// create map marker function with argument for json data
-function createmarker(jsonobj){
+  
     
-$(function(){
-    // iterate through json array object "products"
-    for (var key in jsonobj.products) {
-        //set loop key
-        if (jsonobj.products.hasOwnProperty(key)) {
-  
-              var company   = jsonobj.products[key].company;       // assign company variable
-              var latitude  = jsonobj.products[key].latitude;      // assign latitude coordinates
-              var longitude = jsonobj.products[key].longitude;     // assign longitude coordinates
-              var address   = jsonobj.products[key].address;       // assign business local address
-              var opening   = jsonobj.products[key].opening;       // assign business opening time
-              var closing   = jsonobj.products[key].closing;       // assign business closing time
-  
-              // assign marker to searchlayer variable with popup data attached to marker
-              searchlayer = L.marker([latitude,longitude]).bindPopup("<b><a href='#' style='text-decoration:none;'><p>"+ company +"</p></a></b>" +
-                                                                     "<p>"+ address +"</p>" +
-                                                                     "<p>Open: "+ opening +"AM</p>" +
-                                                                     "<p>Close: "+ closing+"PM</p>"
-                                                                     );
-              // push searchlayer object into temporary markerarray
-              markerarray.push(searchlayer);
-  
-          }
-      }
-  
-  
-      var layerrarray = [];                                         // initalize layer array
-      for (var i in markerarray){                                   // iterate through layer array and add search layer markers
-          layerrarray.push(markerarray[i]);                         // push search layer marker objects into array
-      }
-      
-      // assign layerGroup to variable companies
-      companies = L.layerGroup(layerrarray);
-      // add companies layer to map
-      map.addLayer(companies);
-      // add animation to markers in searchlayer
-      searchlayer.bounce({duration: 500, height: 100}, function(){console.log("done");
-      });
-  
-  });
-}
+//Load and display tile layers on the map
+var mapLayer =  L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/118958/256/{z}/{x}/{y}.png',{
+    }).addTo(map);
+  //Brown & Light blue 118958
+  //Bagit style colors 118688
 
 
-$(function() {
+//Marker w/ Popup for Roseau Central 
+L.marker([15.304221,-61.384134], {icon: bIcon}).addTo(map).bindPopup(
+  "<a href='#Roseau' style='text-decoration:none;'><p>Roseau Central</p></a>"); 
+
+//Marker w/ Popop for Princess Margaret Hospital  
+L.marker([15.305708,-61.385105], {icon: aIcon}).addTo(map).bindPopup(
+  "<a href='#PMH' style='text-decoration:none;'><p>Princess Margaret Hospital</p></a><hr width='100%' color='grey'><p><b>Tel: 266-2000</b></p><p>Charles Avenue, Goodwill</p><p>Open - Closed: 24/7</p>");
+
   
-    // trigger keypress event on search input element
-    $("#search").keypress(function() {
-        // check if return key pressed
-        if (event.keyCode == 13) {
+//Marker w/ Popop for Roseau Bus Stop   
+L.marker([15.300650,-61.388465], {icon: bIcon}).addTo(map).bindPopup(
+  "<a href='#RBS' style='text-decoration:none;'><p>Roseau Bus Stop</p></a>");
+  
+  
+//Marker w/ Popop for Roseau Valley Bus Stop   
+L.marker([15.299134,-61.38522], {icon: bIcon}).addTo(map).bindPopup(
+  "<a href='#RVBS' style='text-decoration:none;'><p>Roseau Valley Bus Stop</p></a>"); 
 
-            var searchstr = $("#search").val();                     // get input for search element
-            var dataString = 'search='+ searchstr;                  // set input for search element
-            
-            // check if string Null
-            if(searchstr ==''){
+//Marker w/ Popop for My home(TEST)   
+L.marker([15.3332779,-61.3852137], {icon: bIcon}).addTo(map).bindPopup(
+"<a href='#test' style='text-decoration:none;'><p>Hello World!</p></a>");
+  
+//Marker w/ Popop for Optical Services Ltd.   
+L.marker([15.3009985,-61.3867475], {icon: aIcon}).addTo(map).bindPopup(
+  "<a href='#Optical' style='text-decoration:none;' style='z-index:1;'><p>Optical Services Ltd.</p></a><hr width='100%' color='grey'><p><b>Tel: 449-9099</b></p><p>Hillsborough Street</p><p>Open-8:00am</p>Closed-6:00pm</p>");
+  
+//Marker w/ Popop for Island Ice-cream
+L.marker([15.2988323,-61.3879739], {icon: aIcon}).addTo(map).bindPopup(
+"<a href='#Island-ice-cream' style='text-decoration:none;'><p>Island Ice-cream</p></a>");
+  
+//Marker w/ Popop for Patty Shack
+L.marker([15.2974194,-61.3871092], {icon: aIcon}).addTo(map).bindPopup(
+"<a href='#Patty-shack' style='text-decoration:none;'><p>Patty Shack</p></a>");
 
-            $( "#error404" ).popup("open");                         // display error404 message for div id#
-            $("#search").focus();                                   // reset cursor
+  
+//Marker w/ Popop for Patty Shack
+L.marker([15.2974194,-61.3871092], {icon: aIcon}).addTo(map).bindPopup(
+"<a href='#Patty-shack' style='text-decoration:none;'><p>Patty Shack</p></a>");
+  
+//Marker w/ Popop for The Banana tree
+L.marker([15.2980223,-61.3883549], {icon: aIcon}).addTo(map).bindPopup(
+"<a href='#The-banana-tree' style='text-decoration:none;'><p>The Banana tree</p></a>");
+  
+  
+  
 
-            } else {
-                
-                // jsonp pass search variable to remote url and get data from mysql
-                $.getJSON('http://www.macasdominica.net/map_search.php?callback=?',dataString,function(data){
-                          
-                    plotmarkers(data);                              // call plotmarker function to pass json object
-                          
-                });
-            }
-        return false;                                               // return false
-        }
-    });
-});
+  
+  
+  },1);// end of Load page issue 
+});// end of Initialize Map
 
- 
-//Function for Geoloaction -- Locate user  
-	$('.geo-local').click(function() {
-	    alert("We could not find your location");
- }); //end of .click(function()
 
-});
+
+
+
