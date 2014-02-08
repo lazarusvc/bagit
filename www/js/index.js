@@ -1,3 +1,9 @@
+/*
+ * Main javascript file functionality
+ * leaflet API 
+ * App Login
+ * Facbook Login API
+*/
 
 // declare global variables
 var map;                                                           // declare map
@@ -78,7 +84,6 @@ $(function(){
   });
 }
 
-
 $(function() {
   
     // trigger keypress event on search input element
@@ -96,15 +101,93 @@ $(function() {
             $("#search").focus();                                   // reset cursor
 
             } else {
-                
                 // jsonp pass search variable to remote url and get data from mysql
                 $.getJSON('http://www.macasdominica.net/map_search.php?callback=?',dataString,function(data){
-                          
                     plotmarkers(data);                              // call plotmarker function to pass json object
                           
                 });
             }
-        return false;                                               // return false
+        return false;
         }
     });
 });
+
+// trigger keypress event on login-btn submit
+$(document).ready(function() {
+    $('#login-btn').submit(function(e) {
+         var username = $("#username").val();
+         var password = $("#password").val();
+        
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: './include/user-login.php',
+            data: 'username='+ username,
+            success: function(data) {
+        
+                if (data === 'Login') {
+                    window.location = './include/user-login.php';
+                } else {
+                    alert('Invalid Credentials');
+                }
+            }
+        });
+     });
+});
+
+
+window.fbAsyncInit = function() {
+    FB.init({
+            appId      : '1396057040652514', //App ID
+            status     : true, // check login status
+            cookie     : true, // enable cookies to allow the server to access the session
+            xfbml      : true  // parse XFBML
+            });
+    
+    // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
+    // for any authentication related change, such as login, logout or session refresh.
+    FB.Event.subscribe('auth.authResponseChange', function(response) {
+                       
+        if (response.status === 'connected') {
+            FBAPI();
+                           
+        } else if (response.status === 'not_authorized') {
+            FB.login();
+                           
+        } else {
+            FB.login();
+        }
+    });
+};
+
+    // Load the SDK asynchronously
+    (function(d){
+         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement('script'); js.id = id; js.async = true;
+         js.src = "//connect.facebook.net/en_US/all.js";
+         ref.parentNode.insertBefore(js, ref);
+     }(document));
+
+    // Here we run a very simple test of the Graph API after login is successful.
+    function FBAPI() {
+        console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me', function(response) {
+               console.log('Good to see you, ' + response.name + '.');
+        });
+}
+
+$(document).ready(function(){
+    $("#toggle-up").click(function(){
+        $("#menu-panel").slideToggle("slow");
+    });
+});
+
+
+$(document).ready(function(){
+    $("#login-btn").click(function(){
+          
+    });
+});
+
+
