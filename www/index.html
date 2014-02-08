@@ -20,27 +20,46 @@
     </head>
     
     <body>
-        
+    
         <!-- Index page -->
-        <div data-role="page" id="index">
+        <div data-role="page" id="login">
             
+            <div id="login-wp">
+                <h1>Hello, Welcome</h1>
+                <div class="profile-image">
+                    <img class="avatar" src="img/avatar.jpg" />
+                </div>
+                
+                <form id="login-form" action="user_login.php" method="POST" >
+                    <input type="text" id="username" name="login-txt" placeholder="username"/>
+                    <input type="password" id="password" name="login-pwd" placeholder="password"/>
+                    <button id="login-btn" name="login" />sign in</button>
+                </form>
+                
+                <div id="login-forget">
+                    <p style="float: left;">forgot my password ?</p>
+                </div>
+                <div id="fb-root"></div>
+                <button id="facebook-btn" name="fblogin" />facebook login</button>
+                <a href="#main">map</a>
+            </div>
+        </div>
+    
+        <!-- Main Page -->
+        <div data-role="page" id="main">
             <!--- Submenu Panel --->
             <div data-role="panel" id="mypanel" data-position="left" data-display="push" data-theme="b">
                 
                 <!-- panel content goes here -->
-                <a href="#test" data-role="button" data-corners="false" data-theme="b">
+                <a href="#main" data-role="button" data-corners="false" data-theme="b">
                     <div id="settings">
                         <p>Settings</p>
                     </div>
                 </a>
-                <hr width="100%" color="grey">
-                
                 <a href="#about" data-role="button" data-corners="false" data-theme="b">
                     <p>About</p>
                 </a>
-                <hr width="100%" color="grey">
-                
-                <p>©RICON 2014</p>
+                <p>RICON 2014</p>
             </div>
             <!-- /panel -->
             
@@ -56,42 +75,74 @@
                 <div class="container">
                     <div class="main">
                         <div class="search-bar">
-                        <form  method="post" name="form">
-                            <input type="text" name="search" id="search" placeholder="e.g fries, shwama" />
-                        </form>
+                            <form  method="post" name="form">
+                                <input type="text" name="search" id="search" placeholder="e.g fries, shwama" />
+                            </form>
+                        </div>
                     </div>
-                </div>
                     <div data-role="popup" id="error404">
                         <p>Warning, seacrh is empty !<p>
                     </div>
                     <div data-role="popup" id="error405">
                         <p>No matches found. Try again.<p>
                     </div>
-            </div>
+                </div>
                 <div id="map"></div>
+                
+                
+                <div id="slider-bottom"><a href="#" id="toggle-up">
+                    <div style="height: 10px; padding: 5px; background-color: #e88e3d ; ">
+                    </div>
+                    
+                </a>
+                <div id="menu-panel">
+                    <button id="panel-button" name="restaurant-button" /><a href="#restaurants">Restaurants</a></button>
+                    <button id="panel-button" name="medication-button" />Medications</button>
+                </div>
+                </div>
+                
+                
             </div>
             <!-- /content -->
         </div>
-        <!-- /index -->
+    
+    <!-- Restaurants page -->
+    <div data-role="page" id="restaurants">
+        <div data-theme="b" data-role="header">
+            <div id="logo"><img src="img/logo.png"/></div>
+            <a href="#panel2" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext "><img src="img/stack.png"></a>
+        </div>
         
-        <!------------------------------------------------->
-        
-        <!-- test page -->    
-        <div data-role="page" id="test">
+        <div data-role="content">
             
-            <!-- test header -->  
-            <div data-theme="b" data-role="header">
-                <h1>Bagit</h1>
-                <a href="#index">
-                    <img src="img/home.png"></a>
-            </div><!-- /header -->
-            
-            <div data-role="content">
-                <div id="hello">  
-                    <h1>Hello World!</h1></div>
-            </div><!-- /content -->
-            
-        </div><!-- /test -->
+            <div class="search-bar">
+                <form  method="post" name="form" id="search-frm">
+                    <input type="search" name="search" id="search" placeholder="e.g fries, shwama" />
+                </form>
+            </div>
+            <div id="restaurants-wp">
+                <div id="food-categories">
+                    <button id="category-btn" name="fastfood"/><img src="img/burger.jpg" /><p>Fast food<span class="category-circle">120</span></p></button>
+                    <button id="category-btn" name="gourmet"/><img src="img/gourmet.jpg" /><p>Gourmet<span class="category-circle">10</span></p></button>
+                    <button id="category-btn" name="cafeshop"/><img src="img/crassouit.jpg" /><p>Caf&eacute; Shop<span class="category-circle">18</span></p></button>
+                </div>
+                <div id="restaurant-list">
+                    <ul data-role="listview" data-theme="b">
+                        <li><a href="#">Kenturky Fried Chicken</a></li>
+                        <li><a href="#">Kelly Snakette</a></li>
+                        <li><a href="#">Kole Hotspot Bar &amp; Grill</a></li>
+                        <li><a href="#">Kelvin Sea Food</a></li>
+                        <li><a href="#">Krispy Beacon Joint</a></li>
+                        <li><a href="#">King Fish Spot</a></li>
+                        <li><a href="#">Kalabash Inn</a></li>
+                        <li><a href="#">Kays Restaurant</a></li>
+                        <li><a href="#">Katie Chill Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     </body>
 </html>
 
