@@ -1,6 +1,10 @@
-/* 
-* CSS3 file
-*/
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300);
+
+body {
+background-color: #e9ecee;
+font-family: 'Open Sans', sans-serif;
+
+}
 
 .ui-content {
 position: absolute;
@@ -8,38 +12,31 @@ top: 50px;
 bottom: 0;
 right: 0;
 left: 0;
-padding: 0;
+padding: 0px;
 }
 
 .search-bar {
-border: 0px;
-background: transparent;
-padding: 2px;
-position: absolute;
-z-index: 1;
-
+background: #e88e3d !important;
+height: 55px;
+margin-top: -4px;
+padding-top: 5px;
+padding-left: 10px;
+padding-right: 10px;
 }
 
-#search {
-border: 0px;
-background-color: #ffffff;
-color: #000000;
-position: absolute;
-z-index: 1;
-left: 56px;
-opacity: 0.7;
-width: 500px;
+#search-frm {
+width: 100%;
 }
+
 
 #logo {
 text-align: center;
-margin-left: auto;
-margin-right: auto;
+margin-left:0 auto;
+margin-right:0 auto;
 }
 
 #map {
 height: 100%;
-z-index: 0;
 }
 
 #mypanel {
@@ -47,12 +44,156 @@ border:block;
 position:fixed;
 }
 
-#hello {
-border:block;
-left:50%;
-color:grey;
+#login-wp {
+margin: 0 auto;
+text-align:left;
+padding:15px;
+font-size : 18pt;
+width: 350px;
 }
 
+.profile-image {
+text-align: center;
+padding-bottom: 0px;
+padding-top: 0px;
+    
+}
 
+.avatar {
+width: 140px;
+height: 140px;
+border-radius: 200px;
+border:10px solid #d9dde0;
+-webkit-border-radius: 200px;
+box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}
 
+#login-wp input[type=text],  input[type=password]{
+background-color: #d9dde0;
+height: 80px;
+color: #555555;
+text-align: center;
+}
 
+#facebook-btn {
+background-color: #3b5998;
+height: 80px;
+color: #fff;
+text-align: center;
+font-size : 22pt;
+font-family: 'Open Sans', sans-serif;
+}
+
+#login-btn {
+background-color: #495a68;
+height: 80px;
+font-size : 22pt;
+text-align: center;
+color: #fff;
+font-family: 'Open Sans', sans-serif;
+margin-top: 30px;
+}
+
+::-webkit-input-placeholder {
+color: #555555;
+}
+
+#slider-bottom {
+width: 100%;
+position: absolute;
+bottom: 0;
+   
+}
+
+#menu-panel {
+display: none;
+height: 160px;
+background-color: #aaaaaa;
+}
+
+#panel-button {
+background-color:#52596b;
+display:inline-block;
+color:#fff;
+font-size:15px;
+padding: 5px;
+text-decoration:none;
+font-family: 'Open Sans', sans-serif;
+font-size : 18pt;
+border-radius : 0px;
+border: none;
+border-bottom : 1px solid #808080;
+margin: 0px;
+height: 80px;
+text-align : left;
+}
+
+.restaurant-button:hover {
+background-color:#b34332;
+}
+
+.restaurant-button:active {
+position:relative;
+top:1px;
+}
+
+#category-btn img {
+float: left;
+text-align: left;
+clear: right;
+height:120px;
+width:120px;
+}
+
+#category-btn {
+background-color: #000000;
+border-bottom: 1px solid #aaa;
+height: 80px;
+color: #fff;
+font-family: 'Open Sans', sans-serif;
+font-size: 30px;
+text-align: center;
+border-radius : 0px;
+border: none;
+border-bottom : 2px solid #2c2e3b;
+margin: 0px;
+padding: 0px;
+height: 120px;
+background-repeat:no-repeat;
+background-size:120px 120px;
+background-position: Top left;
+}
+
+span.category-circle {
+width:50px;
+height:50px;
+border-radius:50px;
+font-size:20px;
+color:#fff;
+line-height:50px;
+text-align:center;
+background: #e88e3d ;
+float: right;
+}
+
+#restaurant-list ul li a {
+display: block;
+height: 20px;
+line-height: 20px;
+border-bottom: 2px solid #aaa;
+padding: 20px;
+min-height: 0;
+}
+
+#restaurant-list ul li img {
+    
+position: relative;
+left:-80px;
+top: -10px;
+width: 200px;
+height:35px;
+float: right;
+text-align: right;
+}
