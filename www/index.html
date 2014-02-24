@@ -1,96 +1,667 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        
-        <title>bagit</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        
-        <!-- css includes -->
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
-        <link rel="stylesheet" href="css/index.css"/>
-        
-        <!-- javasript includes -->
-        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-        <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
-        <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
-        <script src="js/index.js"></script>
-         <script src="/cordova-1.9.0.js"></script>
-        <script src="js/bouncemarker.js"></script>
-        
-    </head>
-    
-   <body onload="init();">
-        
-        <!-- Index page -->
-        <div data-role="page" id="index">
-            
-            <!--- Submenu Panel --->
-            <div data-role="panel" id="mypanel" data-position="left" data-display="overlay" data-theme="b">
-                
-                <!-- panel content goes here -->
-                    <br/>
-                        <h1 align="center">Settings</h1>
-                <hr width="100%" color="grey">
-     <a href="#" id="dark-map" data-role="button" data-corners="false" data-theme="b"><p>Switch map theme</p></a>
-        <hr width="100%" color="grey">
-     <a href="#" id="" data-role="button" data-corners="false" data-theme="b"><p>Other</p></a>     
-         <hr width="100%" color="grey">
-                <a href="#about" data-role="button" data-corners="false" data-theme="b">
-                    <p>About</p></a>
-                <hr width="100%" color="grey">
-                
-                <p>©RICON 2014</p>
+
+<head>
+    <title>Bagit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- css includes -->
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.0.min.css" />
+    <link rel="stylesheet" href="leaflet-0.7.1/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="css/Control.Loading.css" />
+    <link rel="stylesheet" href="css/index.css" />
+
+    <!-- javascript includes -->
+    <script src="js/jquery-2.0.2.min.js"></script>
+    <script src="js/jquery.mobile-1.4.0.min.js"></script>
+    <script src="js/cordova-1.9.0.js"></script>
+    <script src="js/phoneGap.js"></script>
+    <script src="leaflet-0.7.1/leaflet.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/bouncemarker.js"></script>
+    <script src="js/Control.Loading.js"></script>
+    <script type="application/javascript" src="js/fastclick.js"></script>
+    <script type="text/javascript" charset="utf-8" src="apis/geolocation.js"></script>
+    <script type="text/javascript" charset="utf-8" src="apis/camera.js"></script>
+    <script type="text/javascript" charset="utf-8" src="apis/events.js"></script>
+</head>
+
+<body>
+    <div id="preloader">
+        <div id="status">&nbsp;</div>
+    </div>
+
+    <!-- Login page -->
+    <div data-role="page" id="login" style="background:#d45500;">
+
+        <div id="login-wp">
+            <h2>Hello, Welcome</h2>
+            <div class="profile-image">
+                <img class="avatar" src="img/avatar.png" />
             </div>
-            <!-- /panel -->
-            
-            <!-- index header -->
-            <div data-theme="b" data-role="header" data-position"fixed">
-                <div id="logo"><img src="img/logo.png"/></div>
-                <a href="#mypanel" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext "><img src="img/stack.png"></a>
+
+            <form name="login-form" method="post">
+                <input type="text" id="username" name="login-txt" placeholder="username" />
+                <input type="password" id="password" name="login-pwd" placeholder="password" />
+                <button id="login-btn" name="login">sign in</button>
+            </form>
+
+            <div id="login-forget">
+                <p style="float: left;color:#fff;">forgot my password?</p>
             </div>
-            <!-- /header -->
-            
-            <!-- index content -->
-            <div data-role="content">
-                <div class="container">
-                    <div class="main">
-                        <div class="search-bar">
-                        <form  method="post" name="form">
-                            <input type="text" name="search" id="search" placeholder="e.g fries, shwama" />
+            <div id="login-guest">
+                <a href="#main">
+                    <p style="float:right;color:#fff;font-family: robotothin;text-decoration:none;">Guess sign in...</p>
+                </a>
+            </div>
+
+            <!-- <div id="fb-root"></div> -->
+            <button id="facebook-btn" name="fblogin">facebook login</button>
+            <div data-role="popup" id="error406">
+                <p>Username or password is empty. Try again
+                    <p>
+            </div>
+            <div data-role="popup" id="error407">
+                <p>Login unsuccessfull. Wrong username and password
+                    <p>
+            </div>
+        </div>
+    </div>
+    <!-- /login page -->
+
+    <!-- Map Page -->
+    <div data-role="page" id="main" style="background:#000;">
+
+        <div data-role="header" data-id="head" data-position="fixed" data-backbtn="true">
+            <div id="logo">
+                <img src="img/logo.png" />
+            </div>
+            <a href="#about" id="stack" data-transition="slide" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext">
+                <img src="img/stack.png">
+            </a>
+        </div>
+
+        <!-- content -->
+        <div data-role="content">
+            <div class="container-search">
+                <div class="main">
+                    <div class="search-bar">
+                        <form method="post" name="form">
+                            <input type="search" data-clear-btn="true" name="search" id="search" placeholder="e.g fries, shwama, pills" />
                         </form>
                     </div>
                 </div>
-                    <div data-role="popup" id="error404">
-                        <p>Warning, seacrh is empty !<p>
-                    </div>
-                    <div data-role="popup" id="error405">
-                        <p>No matches found. Try again.<p>
-                    </div>
-                    <div class="geo-local" id="api-geolocation"><img src="img/geo-local.png"></div>
+                <div data-role="popup" id="error404">
+                    <p>Warning, seacrh is empty !
+                        <p>
+                </div>
+                <div data-role="popup" id="error405">
+                    <p>No matches found. Try again.
+                        <p>
+                </div>
             </div>
-                <div id="map"></div>
-            </div>
-            <!-- /content -->
+
+            <div id="map"></div>
         </div>
-        <!-- /index -->
-        
- <!--####################################-->
 
-    <!-- Settings page -->
-    <div data-role="page" id="settings">
 
-        <!-- Settings header -->
-       <div data-theme="b" data-role="header">
-            </div><!-- /header -->
+        <div data-role="footer" data-position="fixed" data-theme="b" data-id="foot">
+            <div data-role="navbar" data-iconpos="right">
+                <ul>
+                    <li>
+                        <a href="#main" id="logo" data-transition="pop">
+                            <img src="img/location-place.png" />
+                            <p style="margin:0px; padding:0; font-size: 10px;">Map</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="placespage">
+                            <img src="img/places.png" />
+                            <p style="margin:0px; padding:0; font-size: 10px;">Places</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#checkout" id="logo" data-transition="pop">
+                            <img src="img/checkout.png" />
+                            <p style="margin:0px; padding:0; font-size: 10px;">Bagit</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /content -->
+    </div>
+    <!-- /main -->
 
- <div data-role="content">
-   </div><!-- /content -->
-      
-  </div><!-- /Settings -->
-        
-<script type="text/javascript" charset="utf-8" src="apis/geolocation.js"></script>
-  
-    </body>
+
+    <!-- Places page -->
+    <div data-role="page" id="places" style="background:#e6e6e6;">
+
+        <div data-role="header" data-id="head" data-position="fixed" data-backbtn="true">
+            <div id="logo">
+                <img src="img/logo.png" />
+            </div>
+            <a href="#about" id="stack" data-transition="slide" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext">
+                <img src="img/stack.png">
+            </a>
+        </div>
+
+        <div data-role="content">
+            <div id="places-wp">
+                <div id="places-categories">
+                    <button id="category-btn" name="fastfood">
+                        <div class="category-blue">
+                            <img src="img/burger.jpg" />
+                        </div>
+                        <p>Fast food<span id="total1" class="category-circle"></span>
+                        </p>
+                    </button>
+                    <button id="category-btn" name="gourmet">
+                        <div class="category-blue">
+                            <img src="img/gourmet.jpg" />
+                        </div>
+                        <p>Gourmet<span id="total2" class="category-circle"></span>
+                        </p>
+                    </button>
+                    <button id="category-btn1" name="cafeshop">
+                        <div class="category-blue">
+                            <img src="img/crassouit.jpg" />
+                        </div>
+                        <p>Coffee Shop<span id="total3" class="category-circle"></span>
+                        </p>
+                    </button>
+                    <button id="category-btn2" name="pharmacy">
+                        <div class="category-pink">
+                            <img src="img/medical.jpg" />
+                        </div>
+                        <p>Pharmacy<span id="total4" class="category-circle"></span>
+                        </p>
+                    </button>
+                    <button id="category-btn3" name="optical">
+                        <div class="category-pink">
+                            <img src="img/glasses.png" />
+                        </div>
+                        <p>Eye Care<span id="total5" class="category-circle"></span>
+                        </p>
+                    </button>
+                    <button id="category-btn4" name="boutique">
+                        <div class="category-orange">
+                            <img src="img/boutique.jpg" />
+                        </div>
+                        <p>Boutique<span id="total6" class="category-circle"></span>
+                        </p>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-theme="b" data-id="foot">
+            <div data-role="navbar" data-iconpos="right">
+                <ul>
+                    <li>
+                        <a href="#main" id="logo" data-transition="pop">
+                            <img src="img/location-place.png" />
+                            <p style="margin:0px; padding:0; font-size: 10px;">Map</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#places" id="logo" data-transition="pop">
+                            <img src="img/places.png" />
+                            <p style="margin:0px; padding:0; font-size: 10px;">Places</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#checkout" id="logo" data-transition="pop">
+                            <img src="img/checkout.png" />
+                            <p style="margin:0px; padding:0; font-size: 10px;">Bagit</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="companies">
+
+        <div data-role="header" data-id="head" data-position="fixed" data-backbtn="true">
+            <div id="logo">
+                <img src="img/logo.png" />
+            </div>
+            <a href="#about" id="stack" data-transition="slide" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext">
+                <img src="img/stack.png">
+            </a>
+        </div>
+
+        <div data-role="content">
+            <div id="restaurant-list">
+                <ul data-role="listview" data-filter="true">
+                    <li>
+                        <a href="#products" data-transition="slide" id="item-01">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Kentuky Fried Chicken</h2>
+                            <p class="ui-li-desc">Fast food</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Frans Patisserie</h2>
+                            <p class="ui-li-desc">Coffee Shop</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Guiave Restaurant</h2>
+                            <p class="ui-li-desc">Gourmet</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Ochards Restaurant</h2>
+                            <p class="ui-li-desc">Gourmet</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Italia Restaurant</h2>
+                            <p class="ui-li-desc">Local Cuisine</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Shawarama King Snackette</h2>
+                            <p class="ui-li-desc">Fast Food</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Whitchurch & Co.</h2>
+                            <p class="ui-li-desc">Super Market & Gourmet</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Subway</h2>
+                            <p class="ui-li-desc">Fast food & Coffee Shop</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Pops Rotisserie & Grill</h2>
+                            <p class="ui-li-desc">Fast food</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Patty Shack</h2>
+                            <p class="ui-li-desc">Fast food</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Your Choice Restaurant</h2>
+                            <p class="ui-li-desc">Local Cuisine</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">Island Ice-cream</h2>
+                            <p class="ui-li-desc">Snackette</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-blue"></div>
+                            <h2 class="ui-li-heading">The Banana Tree</h2>
+                            <p class="ui-li-desc">Bar & Grill</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#products2">
+                            <div class="company-pink"></div>
+                            <h2 class="ui-li-heading">Optical Serices Ltd.</h2>
+                            <p class="ui-li-desc">Eye care center & Lab</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-pink"></div>
+                            <h2 class="ui-li-heading">Quickare Pharmacy.</h2>
+                            <p class="ui-li-desc">Pharmacy</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-pink"></div>
+                            <h2 class="ui-li-heading">Bullz Eye Pharmacy</h2>
+                            <p class="ui-li-desc">Pharmacy</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#co" data-rel="popup" data-position-to="origin">
+                            <div class="company-orange"></div>
+                            <h2 class="ui-li-heading">Dons & Divers</h2>
+                            <p class="ui-li-desc">Boutique</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="footer" data-position="fixed" data-theme="b" data-id="foot">
+            <div data-role="navbar" data-iconpos="right">
+                <ul>
+                    <li>
+                        <a href="#main" id="logo" data-transition="pop">
+                            <img src="img/location-place.png" />
+                            <p style="margin:0px; padding:0; font-size: 10px;">Map</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#places" id="logo" data-transition="pop">
+                            <img src="img/places.png" />
+                            <p style="margin:0px; padding:0; font-size: 10px;">Places</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#checkout" id="logo" data-transition="pop">
+                            <img src="img/checkout.png" />
+                            <p style="margin:0px; padding:0; font-size: 10px;">Bagit</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div data-role="popup" id="co" data-theme="a" class="ui-corner-all">
+            <p>this option is not available in demo version</p>
+        </div>
+
+    </div>
+
+    <div data-role="page" id="products">
+
+        <div data-role="header" data-id="head" data-position="fixed">
+            <div id="logo">
+                <img src="img/logo.png" />
+            </div>
+            <a href="#about" id="stack" data-transition="slide" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext">
+                <img src="img/stack.png">
+            </a>
+        </div>
+
+        <div data-role="content">
+	<div id="item-coverpage">Cover</div>
+            <div id="item-list">
+                <ul data-role="listview" data-icon="plus" data-filter="true">
+                    <li><a href="#popupLogin" data-transition="flip" data-rel="popup" data-position-to="window">Chicken Wings<span class="item-circle">20</span><span class="item-price">$5.23</span></a>
+                    </li>
+                    <li><a href="#popupLogin" data-transition="flip" data-rel="popup" data-position-to="window">Chicken Drumstick<span class="item-circle">5</span><span class="item-price">$3.75</span></a>
+                    </li>
+                    <li><a href="#popupLogin" data-transition="flip" data-rel="popup" data-position-to="window">Chicken Sidebreast<span class="item-circle">60</span><span class="item-price">$6.00</span></a>
+                    </li>
+                    <li><a href="#popupLogin" data-transition="flip" data-rel="popup" data-position-to="window">Chicken Hot Wings<span class="item-circle">19</span><span class="item-price">$10.25</span></a>
+                    </li>
+                    <li><a href="#popupLogin" data-transition="flip" data-rel="popup" data-position-to="window">Chicken Barbeque Wings<span class="item-circle">12</span><span class="item-price">$9.99</span></a>
+                    </li>
+                    <li><a href="#popupLogin" data-transition="flip" data-rel="popup" data-position-to="window">Chicken Nuggets<span class="item-circle">10</span><span class="item-price">$12.63</span></a>
+                    </li>
+                    <li><a href="#popupLogin" data-transition="flip" data-rel="popup" data-position-to="window">Chicken Spicy Wings<span class="item-circle">34</span><span class="item-price">$8.99</span></a>
+                    </li>
+                    <li><a href="#popupLogin" data-transition="flip" data-rel="popup" data-position-to="window">Chicken Spicy Thigh<span class="item-circle">50</span><span class="item-price">$5.00</span></a>
+                    </li>
+                </ul>
+            </div>
+            <div data-role="footer" data-position="fixed" data-theme="b" data-id="foot">
+                <div data-role="navbar" data-iconpos="right">
+                    <ul>
+                        <li>
+                            <a href="#main" id="logo" data-transition="pop">
+                                <img src="img/location-place.png" />
+                                <p style="margin:0px; padding:0; font-size: 10px;">Map</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#places" id="logo" data-transition="pop">
+                                <img src="img/places.png" />
+                                <p style="margin:0px; padding:0; font-size: 10px;">Places</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#checkout" id="logo" data-transition="pop">
+                                <img src="img/checkout.png" />
+                                <p style="margin:0px; padding:0; font-size: 10px;">Bagit</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all">
+            <form>
+                <div style="padding:10px 20px;">
+                    <h3>Item Quantity</h3>
+                    <label for="un" class="ui-hidden-accessible">Quantity</label>
+                    <input type="text" name="user" id="un" value="" data-theme="a">
+                    <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add to Cart</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div data-role="page" id="products2">
+
+        <div data-role="header" data-id="head" data-position="fixed">
+            <div id="logo">
+                <img src="img/logo.png" />
+            </div>
+            <a href="#about" id="stack" data-transition="slide" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext">
+                <img src="img/stack.png">
+            </a>
+            <a href="#rx-confirm" id="camera-logo" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-btn-icon-right ui-btn-icon-notext" onclick="capturePhoto();">
+                <img src="img/10-device-access-camera.png">
+            </a>
+        </div>
+
+        <div data-role="content">
+		<div id="item-coverpage">Cover</div>
+            <div id="item-list">
+                <ul data-role="listview" data-icon="plus" data-filter="true">
+                    <li><a href="#popupLogin2" data-transition="flip" data-rel="popup" data-position-to="window">Renu Multi-solution<span class="item-circle">48</span><span class="item-price">$25.00</span></a>
+                    </li>
+                    <li><a href="#popupLogin2" data-transition="flip" data-rel="popup" data-position-to="window">Contact Lens cases<span class="item-circle">50</span><span class="item-price">$60.00</span></a>
+                    </li>
+                    <li><a href="#popupLogin2" data-transition="flip" data-rel="popup" data-position-to="window">Eye drops<span class="item-circle">48</span><span class="item-price">$35.00</span></a>
+                    </li>
+                    <li><a href="#popupLogin2" data-transition="flip" data-rel="popup" data-position-to="window">Reading glasses<span class="item-circle">1000</span><span class="item-price">$60.00</span></a>
+                    </li>
+                    <li><a href="#popupLogin2" data-transition="flip" data-rel="popup" data-position-to="window">Sunglasses<span class="item-circle">12</span><span class="item-price">$350.00</span></a>
+                    </li>
+                </ul>
+            </div>
+            <div data-role="footer" data-position="fixed" data-theme="b" data-id="foot">
+                <div data-role="navbar" data-iconpos="right">
+                    <ul>
+                        <li>
+                            <a href="#main" id="logo" data-transition="pop">
+                                <img src="img/location-place.png" />
+                                <p style="margin:0px; padding:0;">Map</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#places" id="logo" data-transition="pop">
+                                <img src="img/places.png" />
+                                <p style="margin:0px; padding:0;">Places</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#checkout" id="logo" data-transition="pop">
+                                <img src="img/checkout.png" />
+                                <p style="margin:0px; padding:0;">Bagit</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="popup" id="popupLogin2" data-theme="a" class="ui-corner-all">
+            <form>
+                <div style="padding:10px 20px;">
+                    <h3>Item Quantity</h3>
+                    <label for="un" class="ui-hidden-accessible">Quantity</label>
+                    <input type="text" name="user" id="un" value="" data-theme="a">
+                    <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add to Cart</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div data-role="page" id="rx-confirm">
+        <div data-role="header" data-id="head" data-position="fixed">
+            <div id="logo">
+                <p style="text-shadow:none;color:#fff;">Confirm prescription</p>
+            </div>
+            <a href="#products2" id="prod" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext">
+                <img src="img/back.png" />
+            </a>
+        </div>
+        <div data-role="content">
+
+            <div id="submit-container">
+                <img style="width:50%;height:50%;" id="largeImage" src="">
+            </div>
+
+            <button>Submit</button>
+        </div>
+        <!-- /content -->
+
+        <div data-role="footer" data-position="fixed" data-theme="b" data-id="foot">
+            <div data-role="navbar" data-iconpos="right">
+                <ul>
+                    <li>
+                        <a href="#main" id="logo" data-transition="pop" style="font-family:robotothin;">
+                            <img src="img/location-place.png" />
+                            <p>Map</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#medical-list" id="logo" data-transition="pop" style="font-family:robotothin;">
+                            <img src="img/places.png" />
+                            <p>Places</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="logo" data-transition="pop" style="font-family:robotothin;">
+                            <img src="img/checkout.png" />
+                            <p>Bagit</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /navbar -->
+        </div>
+        <!-- /footer -->
+
+    </div>
+
+
+    <div data-role="page" id="about" style="background:#e6e6e6;">
+
+        <div data-role="header" data-id="head" data-position="fixed">
+            <div id="logo">
+                <p style="text-shadow:none;color:#fff;">About</p>
+            </div>
+            <a href="#main" id="prod" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext">
+                <img id="#about-back-btn" src="img/back.png" />
+            </a>
+        </div>
+
+        <div data-role="content">
+
+            <div id="about-main">
+                <img src="img/about-logo.png" />
+                <h1>Bagit</h1>
+                <br/>
+                <p>a universal store-front locator.</p>
+                <br/>
+                <br/>
+
+                <p>Bagit makes it easy for small, medium to large Businesses to be accessible online to mobile users anywhere.</p>
+                <br/>
+                <hr width="100%" color="#e6e6e6">
+                <strong>Version v2014.02.23</strong>
+                <p>Â©RICON 2014. All rights reserved</p>
+                <hr width="100%" color="#e6e6e6">
+                <strong>Powered by</strong>
+                <br/>
+                <p>Leaflet</p>
+                <br/>
+                <p>Cordova PhoneGap</p>
+                <br/>
+                <p>jQuery Mobile</p>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="checkout" style="background:#fff;">
+
+        <div data-role="header" data-id="head" data-position="fixed">
+            <div id="logo">
+                <p style="text-shadow:none;color:#fff;">Checkout</p>
+            </div>
+            <a href="#main" id="prod" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-left ui-btn-icon-notext">
+                <img id="about-back-btn" src="img/back.png" />
+            </a>
+        </div>
+
+        <div data-role="content">
+
+            <div id="checkout-item">
+                <img src="img/kebab.jpg">
+                <h1>Pops Rotisserie & Grill</h1>
+                <h2>Price: $20.00</h2>
+                <p>Chicken and fresh hurbs</p>
+                <br/>
+                <hr width="90%" color="#aaa">
+            </div>
+
+
+            <a href="#pay" data-rel="popup" data-position-to="origin" style="text-decoration:none;">
+                <button id="checkout-btn" type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-right ui-icon-info">
+                    <img src="img/visa.png">Pay by card</button>
+            </a>
+            <a href="#pay" data-rel="popup" data-position-to="origin" style="text-decoration:none;">
+                <button id="checkout-btn" type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-right ui-icon-info">
+                    <img src="img/cod.png">Pay on delivery</button>
+            </a>
+            <br/>
+            <h1>Related Products</h1>
+
+
+
+            <div data-role="popup" id="pay" data-theme="a" class="ui-corner-all">
+                <p>this option is not available in demo version</p>
+            </div>
+
+        </div>
+        <!-- /content -->
+
+
+
+    </div>
+    <!-- /end checkout -->
+
+</body>
+
 </html>
-
